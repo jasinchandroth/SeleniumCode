@@ -36,12 +36,14 @@ public class TestBase {
         if (browserName.equals("chrome")){
             System.getProperty("webdriver.chrome.driver","D:\\MyJavaProjects\\chromeDriver\\chromedriver.exe");
             driver=new ChromeDriver();
+
         }
         driver.get(prop.getProperty("url"));
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
 
     }
 
