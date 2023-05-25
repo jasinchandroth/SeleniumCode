@@ -1,8 +1,11 @@
 package com.toolsqa.base;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,7 +16,7 @@ import java.util.Properties;
 public class TestBase {
     public static WebDriver driver;
     public static Properties prop;
-    public static Action act;
+    public static Actions act;
 
     public TestBase(){
         try {
@@ -38,6 +41,7 @@ public class TestBase {
             driver=new ChromeDriver();
 
         }
+        act=new Actions(driver);
         driver.get(prop.getProperty("url"));
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
@@ -47,4 +51,9 @@ public class TestBase {
 
     }
 
+    public static void ScrollPage(WebElement element){
+        JavascriptExecutor js= (JavascriptExecutor) driver;
+        js.executeScript("argument[0].scrollIntoView()",element);
+
+    }
 }
