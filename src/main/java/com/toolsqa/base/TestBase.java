@@ -1,8 +1,11 @@
 package com.toolsqa.base;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,12 +16,12 @@ import java.util.Properties;
 public class TestBase {
     public static WebDriver driver;
     public static Properties prop;
-    public static Action act;
+    public static Actions act;
 
     public TestBase(){
         try {
             prop=new Properties();
-            FileInputStream ip=new FileInputStream("D:\\MyJavaProjects\\ToolsQA\\ToolQA\\src\\main\\java\\com\\toolsqa\\properties\\config.properties");
+            FileInputStream ip=new FileInputStream("D:\\MyJavaProjects\\ToolsQAProject\\SeleniumCode\\src\\main\\java\\com\\toolsqa\\properties\\config.properties");
             prop.load(ip);
         }
         catch (FileNotFoundException e){
@@ -32,12 +35,13 @@ public class TestBase {
 
 
     public static void initialization(){
-        String browserName= prop.getProperty("browser");
+        String browserName= (String) prop.getProperty("browser");
         if (browserName.equals("chrome")){
             System.getProperty("webdriver.chrome.driver","D:\\MyJavaProjects\\chromeDriver\\chromedriver.exe");
             driver=new ChromeDriver();
 
         }
+        act=new Actions(driver);
         driver.get(prop.getProperty("url"));
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
@@ -47,4 +51,9 @@ public class TestBase {
 
     }
 
+    public static void scrollPage(WebElement element){
+        JavascriptExecutor js= (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();",element);
+
+    }
 }
